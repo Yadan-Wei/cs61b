@@ -1,5 +1,5 @@
 /** Class that determines whether or not a year is a leap year.
- *  @author YOUR NAME HERE
+ *  @author Yadan
  */
 public class LeapYear {
 
@@ -34,14 +34,14 @@ public class LeapYear {
         2)divisible by 4 and not by 100.
     For example, 2000 and 2004 are leap years. 1900, 2003, and 2100 are not leap years.*/
     public static boolean isLeapYear(int year) {
-        if (year % 400 = 0) {
-            return True;
+        if (year % 400 == 0) {
+            return true;
         }
-        else if (year % 4 = 0 and year % 100 != 0){
-            return True;
+        else if (year % 4 == 0 && year % 100 != 0){
+            return true;
         }
         else {
-            return False;
+            return false;
         }
     }
 }
