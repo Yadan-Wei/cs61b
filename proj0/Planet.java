@@ -12,7 +12,7 @@ public class Planet{
 	Declaring them as static final will help you to create a CONSTANT. 
 	Only one copy of variable exists which can’t be reinitialize.*/
 
-	final static double gravConstant = 6.67e-11;
+	private final static double gravConstant = 6.67e-11;
 
 
 	public Planet(double xP, double yP, double xV, double yV,
@@ -22,7 +22,7 @@ public class Planet{
 		xxVel = xV;
 		yyVel = yV;
 		mass = m;
-		imgFileName = "images/"+img;
+		imgFileName = img;
 	}
 
 	public Planet(Planet p){
