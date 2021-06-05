@@ -22,7 +22,7 @@ public class Planet{
 		xxVel = xV;
 		yyVel = yV;
 		mass = m;
-		imgFileName = img;
+		imgFileName = "images/"+img;
 	}
 
 	public Planet(Planet p){
@@ -91,5 +91,9 @@ public class Planet{
 		this.yyVel = this.yyVel + dt*aY;
 		this.xxPos = this.xxPos + dt*this.xxVel;
 		this.yyPos = this.yyPos + dt*this.yyVel;
+	}
+
+	public void draw(){
+		StdDraw.picture(this.xxPos, this.yyPos, this.imgFileName);
 	}
 }
