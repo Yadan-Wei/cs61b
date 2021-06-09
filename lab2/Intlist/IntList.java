@@ -79,20 +79,54 @@ public class IntList {
      * Returns a list consisting of the elements of A followed by the
      * *  elements of B.  May modify items of A. Don't use 'new'.
      */
-
+/** Why I need to define a pointer here but do not need in Square method.
+ * iterative */
+    /**public static IntList dcatenate(IntList A, IntList B) {
+        IntList p = A;
+        while (p.rest != null){
+          p = p.rest;
+        }
+            p.rest = B;
+        return A;
+    }*/
+/** recursive */
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        if (A == null){
+            return B;
+        }
+        A.rest = dcatenate(A.rest, B);
+        return A;
     }
 
     /**
      * Returns a list consisting of the elements of A followed by the
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
+    /** iterative */
+    /**public static IntList catenate(IntList A, IntList B) {
+        if (A == null){
+            return B;
+        }
+        return new IntList(A.first, catenate(A.rest, B));
+    }*/
+
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        }
+        IntList p = A;
+        IntList res = new IntList(p.first, null);
+        IntList pres = res;
+        while (p.rest != null) {
+            p = p.rest;
+            pres.rest = new IntList(p.first, null);
+            pres = pres.rest;
+        }
+        pres.rest = B;
+        return res;
     }
+
+
 
 
 
