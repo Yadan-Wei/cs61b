@@ -39,10 +39,14 @@ public class LinkedListDeque<T> {
 	}
 
 	public void addLast(T item) {
-		sentinel.prev = new Node(sentinel.prev, item, sentinel);
-		sentinel.prev.prev.next = sentinel.prev;
+		if (size == 0) {
+			sentinel.next = new Node(sentinel, item, sentinel);
+			sentinel.prev = sentinel.next;
+		} else {
+			sentinel.prev = new Node(sentinel.prev, item, sentinel);
+			sentinel.prev.prev.next = sentinel.prev;
+		}
 		size = size + 1;
-
 	}
 
 	public boolean isEmpty() {
