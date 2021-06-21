@@ -16,7 +16,7 @@ public class LinkedListDeque<T> {
 
 	/* Create an empty deque*/
 	public LinkedListDeque() {
-		sentinel = new Node(null, (T) "1", null);
+		sentinel = new Node(null, null, null);
 		size = 0;
 	}
 
