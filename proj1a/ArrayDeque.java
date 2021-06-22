@@ -1,4 +1,4 @@
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> {
 	private int size;
 	private int nextFirst;
 	private int nextLast;
@@ -10,7 +10,7 @@ public class ArrayDeque<T> implements Deque<T> {
 		nextFirst = (items.length - size) / 2;
 		nextLast = nextFirst + 1;
 	}
-	@Override
+
 	public int size() {
 		return size;
 	}
@@ -19,7 +19,6 @@ public class ArrayDeque<T> implements Deque<T> {
 		return size == items.length;
 	}
     /* add first item and resize if array is full.*/
-	@Override
 	public void addFirst(T item) {
 		if (isFull()) {
 			resize(items.length, 2);
@@ -29,7 +28,6 @@ public class ArrayDeque<T> implements Deque<T> {
 		size = size + 1;
 	}
     /* add last item and resize if array is full.*/
-	@Override
 	public void addLast(T item) {
         if (isFull()) {
             resize(items.length, 2);
@@ -39,7 +37,6 @@ public class ArrayDeque<T> implements Deque<T> {
         size = size + 1;
 	}
     /* remove and return the first item in the queue and check the size*/
-	@Override
 	public T removeFirst() {
 	    if (size == 0) {
 	        return null;
@@ -54,7 +51,6 @@ public class ArrayDeque<T> implements Deque<T> {
         }
         return res;
 	}
-	@Override
 	public T removeLast() {
 	    if (size == 0) {
 	        return null;
@@ -71,7 +67,6 @@ public class ArrayDeque<T> implements Deque<T> {
 	}
 	/** is this index start from the one before nextFirst, if so, we need
 	 * compare the length of items and the first + index.*/
-	@Override
 	public T get(int index) {
 	    if (index >= size) {
 	        return null;
@@ -124,5 +119,16 @@ public class ArrayDeque<T> implements Deque<T> {
 			return 0;
 		}
 		return index + 1;
+	}
+
+	public boolean isEmpty() {
+    	return size == 0;
+	}
+
+	public void printDeque() {
+		for (int i = 0; i < size; i++) {
+			System.out.print(get(i) + " ");
+		}
+		System.out.println();
 	}
 }
