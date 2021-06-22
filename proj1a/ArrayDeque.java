@@ -1,3 +1,12 @@
+/** Please be noted add isEmpty method, or the auto grader couldn't
+ * find the API to do next step.
+ * for method or variable, if we don't want they are accessed out of this class,
+ * Please set them to private.
+ * ArrayDeque is a double sided queue, it has two pointers, first and last.
+ * Each add first will make the first move forward one step while last the opposite.
+ * when first reaches to the head of the array, it will move to the end of the array
+ * while last moves to the head of the array when it reaches the end.
+ */
 public class ArrayDeque<T> {
 	private int size;
 	private int nextFirst;
@@ -15,7 +24,7 @@ public class ArrayDeque<T> {
 		return size;
 	}
 
-	public boolean isFull() {
+	private boolean isFull() {
 		return size == items.length;
 	}
     /* add first item and resize if array is full.*/
@@ -77,9 +86,10 @@ public class ArrayDeque<T> {
 		}
 	    return items[first + index - items.length];
 	}
-	/**It is impossible to use copy directly approach to size up.
+	/**It is impossible to use copy directly approach to resize.
 	 * we need |2|3|__|4|5| not |2|3|__|4|5|_|_|*/
     private void resize(int length, double factor) {
+    	/* Pay attention to data type.*/
     	int newLength = (int) (length * factor);
     	T[] a = (T[]) new Object[newLength];
 		int first = plusOne(nextFirst);
