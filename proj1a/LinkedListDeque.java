@@ -20,12 +20,12 @@ public class LinkedListDeque<T> {
 		size = 0;
 	}
 
-	public LinkedListDeque(T item) {
+	/**public LinkedListDeque(T item) {
 		sentinel = new Node(null, null, null);
 		sentinel.next = new Node(sentinel, item, null);
 		sentinel.prev = sentinel.next;
 		size = 1;
-	}
+	}*/
 
 	public void addFirst(T item) {
 		if (size == 0) {
@@ -96,14 +96,14 @@ public class LinkedListDeque<T> {
 			return null;
 		}
 		Node p = sentinel;
-		while (index != 0) {
+		while (index >= 0) {
 			p = p.next;
 			index  = index - 1;
 		}
 		return p.item;
 	}
 
-	public T getRecursiveHelper(int index, Node p) {
+	private T getRecursiveHelper(int index, Node p) {
 		if (index == 0) {
 			return p.item;
 		}

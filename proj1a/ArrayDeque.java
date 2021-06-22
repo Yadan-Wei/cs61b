@@ -1,4 +1,4 @@
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T> {
 	private int size;
 	private int nextFirst;
 	private int nextLast;
@@ -10,7 +10,7 @@ public class ArrayDeque<T> {
 		nextFirst = (items.length - size) / 2;
 		nextLast = nextFirst + 1;
 	}
-
+	@Override
 	public int size() {
 		return size;
 	}
@@ -19,6 +19,7 @@ public class ArrayDeque<T> {
 		return size == items.length;
 	}
     /* add first item and resize if array is full.*/
+	@Override
 	public void addFirst(T item) {
 		if (isFull()) {
 			resize(items.length, 2);
@@ -28,6 +29,7 @@ public class ArrayDeque<T> {
 		size = size + 1;
 	}
     /* add last item and resize if array is full.*/
+	@Override
 	public void addLast(T item) {
         if (isFull()) {
             resize(items.length, 2);
@@ -37,6 +39,7 @@ public class ArrayDeque<T> {
         size = size + 1;
 	}
     /* remove and return the first item in the queue and check the size*/
+	@Override
 	public T removeFirst() {
 	    if (size == 0) {
 	        return null;
@@ -51,7 +54,7 @@ public class ArrayDeque<T> {
         }
         return res;
 	}
-
+	@Override
 	public T removeLast() {
 	    if (size == 0) {
 	        return null;
@@ -68,6 +71,7 @@ public class ArrayDeque<T> {
 	}
 	/** is this index start from the one before nextFirst, if so, we need
 	 * compare the length of items and the first + index.*/
+	@Override
 	public T get(int index) {
 	    if (index >= size) {
 	        return null;
@@ -80,41 +84,42 @@ public class ArrayDeque<T> {
 	}
 	/**It is impossible to use copy directly approach to size up.
 	 * we need |2|3|__|4|5| not |2|3|__|4|5|_|_|*/
-    public void resize(int length, double factor) {
-    	T[] a = (T[]) new Object[(int) (length * factor)];
+    private void resize(int length, double factor) {
+    	int newLength = (int) (length * factor);
+    	T[] a = (T[]) new Object[newLength];
 		int first = plusOne(nextFirst);
 		int leftLength = first + size - length;
 		/** from |_|_|_|_|1|2|_|_|_|_| to |_|_|_|1|2| or
 		 * from |_|_|3|4|_| to |_|_|_|_|_|_|_|_|3|4|, change nextFirst and nextLast*/
     	if (leftLength <= 0) {
-    		System.arraycopy(items, first, a, length * factor - size, size);
-    		nextFirst = minusOne(length * factor - size);
+    		System.arraycopy(items, first, a, (int) newLength - size, size);
+    		nextFirst = minusOne(newLength - size);
     		nextLast = 0;
 		/** from |1|_|_|_|_|_|_|_|_|2| to |1|_|_|_|2|
 		 * from |3|4|_|1| to |3|4|_|_|_|_|_|1|, need to change nextFirst. */
 		} else {
 			System.arraycopy(items, 0, a, 0, leftLength);
-			System.arraycopy(items, first, a, first + length * (factor - 1), length - first);
-			nextFirst = minusOne(first + length * (factor - 1));
+			System.arraycopy(items, first, a, first + newLength - length, length - first);
+			nextFirst = minusOne(first + newLength - length);
 		}
 		items = a;
     }
 
-    public boolean checkResize() {
+    private boolean checkResize() {
 		if (items.length >= 16) {
 			return (((double) size) / items.length < 0.25);
 		}
 		return false;
     }
 
-	public int minusOne(int index) {
+	private int minusOne(int index) {
 		if (index == 0) {
 			return items.length - 1;
 		}
 		return index - 1;
 	}
 
-	public int plusOne(int index) {
+	private int plusOne(int index) {
 		if (index == items.length - 1) {
 			return 0;
 		}
