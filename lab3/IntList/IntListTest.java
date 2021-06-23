@@ -5,6 +5,26 @@ import org.junit.Test;
 public class IntListTest {
 
     /**
+     * Returns the reverse of the given IntList.
+     * This method is destructive. If given null
+     * as an input, returns null.
+     */
+
+    @Test
+    public void testReverse() {
+        /* That the function returns a reversed list.*/
+        IntList one = IntList.of(0, 1, 2, 3);
+        IntList actual = IntList.reverse(one);
+        IntList expected = IntList.of(3, 2, 1, 0);
+        assertEquals(expected, actual);
+        /** That the function is destructive, i.e. when it is
+         * done running, the list pointed to by A has been tampered with.*/
+        assertNotEquals(one, actual);
+        /*That the method handles a null input properly.*/
+        assertEquals(null, IntList.reverse(null));
+    }
+
+    /**
      * Example test that verifies correctness of the IntList.of static
      * method. The main point of this is to convince you that
      * assertEquals knows how to handle IntLists just fine.
