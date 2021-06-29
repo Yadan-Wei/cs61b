@@ -4,11 +4,11 @@ ArrayDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: the special case I need to consider
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: 
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
