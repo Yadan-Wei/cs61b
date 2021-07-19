@@ -43,6 +43,8 @@ public class GuitarPlayer {
         vol = new double[128];
         for (int i = 0; i < strings.length; i++) {
             strings[i] = new GuitarString(440.0 * Math.pow(2.0, (i - 69.0) / 12.0));
+            /* please be noted here must call pluck() or it won't work*/
+            strings[i].pluck();
             vol[i] = 0.0;
         }
     }
