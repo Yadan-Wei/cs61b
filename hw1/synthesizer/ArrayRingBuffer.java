@@ -15,25 +15,25 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     public Iterator<T> iterator() {
         return new ArrayRingBufferIterator();
     }
-        private class ArrayRingBufferIterator implements Iterator<T> {
-            private int curPos;
+    private class ArrayRingBufferIterator implements Iterator<T> {
+        private int curPos;
 
-            public ArrayRingBufferIterator() {
-                curPos = first;
-            }
-            public boolean hasNext() {
-               return curPos != last;
-            }
-
-            public T next() {
-                T returnItem = rb[curPos];
-                curPos += 1;
-                if (curPos == capacity) {
-                    curPos = 0;
-                }
-                return returnItem;
-            }
+        public ArrayRingBufferIterator() {
+            curPos = first;
         }
+        public boolean hasNext() {
+            return curPos != last;
+        }
+
+        public T next() {
+            T returnItem = rb[curPos];
+            curPos += 1;
+            if (curPos == capacity) {
+                curPos = 0;
+            }
+            return returnItem;
+        }
+    }
 
     /**
      * Create a new ArrayRingBuffer with the given capacity.
@@ -70,7 +70,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * covered Monday.
      */
     public T dequeue() {
-        // TODO: Dequeue the first item. Don't forget to decrease fillCount and update
         if (isEmpty()) {
             throw new RuntimeException("Ring buffer underflow");
         }
@@ -88,12 +87,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * Return oldest item, but don't remove it.
      */
     public T peek() {
-        // TODO: Return the first item. None of your instance variables should change.
         if (isEmpty()) {
             throw new RuntimeException("Ring buffer underflow");
         }
         return rb[first];
     }
-
-    // TODO: When you get to part 5, implement the needed code to support iteration.
 }

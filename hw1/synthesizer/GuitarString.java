@@ -16,6 +16,9 @@ public class GuitarString {
     public GuitarString(double frequency) {
 
         buffer = new ArrayRingBuffer<>((int) (Math.round(SR / frequency)));
+        while (!buffer.isFull()) {
+            buffer.enqueue(0.0);
+        }
     }
 
 
