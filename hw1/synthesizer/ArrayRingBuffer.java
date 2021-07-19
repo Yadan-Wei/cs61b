@@ -1,10 +1,9 @@
-// TODO: Make sure to make this class a part of the synthesizer package
+
 package synthesizer;
 
 import java.util.Iterator;
 
-//TODO: Make sure to make this class and all of its methods public
-//TODO: Make sure to make this class extend AbstractBoundedQueue<t>
+
 public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
@@ -16,35 +15,30 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     public Iterator<T> iterator() {
         return new ArrayRingBufferIterator();
     }
-    private class ArrayRingBufferIterator implements Iterator<T> {
-        private int curPos;
+        private class ArrayRingBufferIterator implements Iterator<T> {
+            private int curPos;
 
-        public ArrayRingBufferIterator() {
-            curPos = first;
-        }
-        public boolean hasNext() {
-           return curPos != last;
-        }
-
-        public T next() {
-            T returnItem = rb[curPos];
-            curPos += 1;
-            if (curPos == capacity) {
-                curPos = 0;
+            public ArrayRingBufferIterator() {
+                curPos = first;
             }
-            return returnItem;
+            public boolean hasNext() {
+               return curPos != last;
+            }
+
+            public T next() {
+                T returnItem = rb[curPos];
+                curPos += 1;
+                if (curPos == capacity) {
+                    curPos = 0;
+                }
+                return returnItem;
+            }
         }
-    }
 
     /**
      * Create a new ArrayRingBuffer with the given capacity.
      */
     public ArrayRingBuffer(int capacity) {
-        // TODO: Create new array with capacity elements.
-        //       first, last, and fillCount should all be set to 0.
-        //       this.capacity should be set appropriately. Note that the local variable
-        //       here shadows the field we inherit from AbstractBoundedQueue, so
-        //       you'll need to use this.capacity to set the capacity.
         this.capacity = capacity;
         rb = (T[]) new Object[capacity];
         first = 0;
@@ -59,7 +53,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * covered Monday.
      */
     public void enqueue(T x) {
-        // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
         if (isFull()) {
             throw new RuntimeException("Ring buffer overflow");
         }
@@ -96,6 +89,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
     public T peek() {
         // TODO: Return the first item. None of your instance variables should change.
+        if (isEmpty()) {
+            throw new RuntimeException("Ring buffer underflow");
+        }
         return rb[first];
     }
 
