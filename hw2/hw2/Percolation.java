@@ -21,24 +21,24 @@ public class Percolation {
             throw new IllegalArgumentException();
         }
         this.N = N;
-        sites = new WeightedQuickUnionUF( N * N + 2); // initialize a grid includes top and bottom sites
-        sites2 = new WeightedQuickUnionUF(N * N + 1); // initialize a grid includes top sites.
+        sites = new WeightedQuickUnionUF(N * N + 2); //top and bottom
+        sites2 = new WeightedQuickUnionUF(N * N + 1); //top
         topSite = N * N; // the last two sites are set to be top and bottom sites
         bottomSite = N * N + 1;
 
         //union top site with all first row sites
-        for (int i = 0; i < N; i ++) {
-            sites.union(topSite,xyTo1D(0, i));
+        for (int i = 0; i < N; i++) {
+            sites.union(topSite, xyTo1D(0, i));
             sites2.union(topSite, xyTo1D(0, i));
         }
         // union bottom site with all last row sites
-        for (int i = 0;i < N; i++) {
+        for (int i = 0; i < N; i++) {
             sites.union(bottomSite, xyTo1D(N - 1, i));
         }
 
         flagOpen = new boolean[N][N];
-        for ( int i = 0; i < N; i ++) {
-            for (int j = 0; j < N; j ++) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
                 flagOpen[i][j] = false;
             }
         }
@@ -53,10 +53,10 @@ public class Percolation {
     private void connectNeighbor(int row, int col) {
         int siteConnected = xyTo1D(row, col);
         if (row - 1 >= 0 && isOpen(row - 1, col)) {
-            sites.union(xyTo1D(row - 1,col),siteConnected);
-            sites2.union(xyTo1D(row - 1,col),siteConnected);
+            sites.union(xyTo1D(row - 1, col), siteConnected);
+            sites2.union(xyTo1D(row - 1, col), siteConnected);
         }
-        if (row + 1 < N && isOpen(row + 1, col)){
+        if (row + 1 < N && isOpen(row + 1, col)) {
             sites.union(xyTo1D(row + 1, col), siteConnected);
             sites2.union(xyTo1D(row + 1, col), siteConnected);
         }
@@ -78,7 +78,7 @@ public class Percolation {
         }
         flagOpen[row][col] = true;
         numOpen += 1;
-        connectNeighbor(row,col);
+        connectNeighbor(row, col);
     }
 
     // is the site (row, col) open?
@@ -103,6 +103,9 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
+        if (numberOfOpenSites() == 0) {
+            return false;
+        }
         return sites.connected(bottomSite, topSite);
     }
     // use for unit testing (not required)
