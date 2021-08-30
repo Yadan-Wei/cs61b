@@ -7,7 +7,7 @@ import java.util.Set;
  *  A hash table-backed Map implementation. Provides amortized constant time
  *  access to elements via get(), remove(), and put() in the best case.
  *
- *  @author Your name here
+ *  @author Yadan Wei
  */
 public class MyHashMap<K, V> implements Map61B<K, V> {
 
@@ -53,19 +53,42 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        if (key == null) throw new UnsupportedOperationException();
+        int hashCode = hash(key);
+        return buckets[hashCode].get(key);
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (key == null ) throw new UnsupportedOperationException();
+        if (loadFactor() > MAX_LF) {
+            resize(buckets.length);
+        }
+        int hashCode = hash(key);
+        if (!buckets[hashCode].containsKey(key)) {
+            size += 1;
+        }
+        buckets[hashCode].put(key,value);
+    }
+
+    private void resize(int length) {
+        ArrayMap<K, V>[] oldBuckets = buckets;
+        int oldSize = size;
+        buckets = new ArrayMap[length * 2];
+        clear();
+        size = oldSize;
+        for (int i = 0; i < oldBuckets.length; i++) {
+            for (K k:oldBuckets[i]) {
+                buckets[hash(k)].put(k,oldBuckets[i].get(k));
+            }
+        }
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
