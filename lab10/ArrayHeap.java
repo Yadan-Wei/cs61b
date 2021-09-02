@@ -110,8 +110,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         /** TODO: Your code here. */
 
         //recursive
-        if (index == 1) return;
+
         int parentIndex = parentIndex(index);
+        if(!inBounds(parentIndex)) return;
         Node parent = getNode(parentIndex);
         Node child = getNode(index);
         if (child.myPriority < parent.myPriority) {
@@ -144,7 +145,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         Node parent = getNode(index);
         int childIndex = min(leftIndex(index), rightIndex(index));
         Node child = getNode(childIndex);
-        if (child == null) return;
+        if (!inBounds(childIndex)) return;
         if (parent.myPriority > child.myPriority) {
             swap(index, childIndex);
             sink(childIndex);
@@ -176,11 +177,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
 
         /* TODO: Your code here! */
-        int index = size + 1;
+
         Node newNode = new Node(item, priority);
-        contents[index] = newNode;
         size += 1;
-        swim(index);
+        contents[size] = newNode;
+        swim(size);
     }
 
     /**
@@ -236,6 +237,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
+        if (size == 0)
+            return;
         for (int i = 1; i <= size; i++) {
             if (contents[i].myItem.equals(item)) {
                 if (contents[i].myPriority < priority) {
@@ -247,7 +250,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
                 }
             }
         }
-        return;
     }
 
     /**
@@ -478,6 +480,23 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             assertEquals(expected[i], pq.removeMin());
             i += 1;
         }
+    }
+
+    @Test
+    public void testChangePriority() {
+        ArrayHeap<String> pq = new ArrayHeap<>();
+        pq.insert("c", 3);
+        pq.insert("i", 9);
+        pq.insert("g", 7);
+        pq.insert("d", 4);
+        pq.insert("a", 1);
+        pq.insert("h", 8);
+        pq.insert("e", 5);
+        pq.insert("b", 2);
+        pq.changePriority("c",10);
+        assertEquals("c",pq.contents[8].myItem);
+        pq.changePriority("c",0);
+        assertEquals("c", pq.contents[1].myItem);
     }
 
 }
