@@ -108,7 +108,18 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
+
+        //recursive
+        if (index == 1) return;
         int parentIndex = parentIndex(index);
+        Node parent = getNode(parentIndex);
+        Node child = getNode(index);
+        if (child.myPriority < parent.myPriority) {
+            swap(parentIndex, index);
+            swim(parentIndex);
+        } else return;
+        // loop
+        /**int parentIndex = parentIndex(index);
         Node parent = getNode(parentIndex);
         Node child = getNode(index);
         while (parent != null && child.myPriority < parent.myPriority) {
@@ -118,7 +129,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             parentIndex = parentIndex(index);
             parent = getNode(parentIndex);
         }
-        return;
+        return;*/
     }
 
     /**
@@ -129,6 +140,17 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
+        //recursive
+        Node parent = getNode(index);
+        int childIndex = min(leftIndex(index), rightIndex(index));
+        Node child = getNode(childIndex);
+        if (child == null) return;
+        if (parent.myPriority > child.myPriority) {
+            swap(index, childIndex);
+            sink(childIndex);
+        } else return;
+        // loop
+        /**
         Node parent = getNode(index);
         int childIndex = min(leftIndex(index), rightIndex(index));
         Node child = getNode(childIndex);
@@ -139,7 +161,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             childIndex = min(leftIndex(index), rightIndex(index));
             child = getNode(childIndex);
         }
-        return;
+        return;*/
     }
 
     /**
@@ -212,7 +234,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
-        for (int i = 1; i <= size; i++) {
+        for (int i = 0; i <= size; i++) {
             Node oldNode = getNode(i);
             if (oldNode.myItem.equals(item)) {
                 Node newNode = new Node(item, priority);
