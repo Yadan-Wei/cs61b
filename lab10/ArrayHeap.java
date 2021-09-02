@@ -209,6 +209,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         T minItem = peek();
         if (size != 0) {
             contents[1] = getNode(size);
+            contents[size] = null;
             size = size - 1;
             sink(1);
         }
@@ -236,13 +237,14 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
         for (int i = 1; i <= size; i++) {
-            Node oldNode = getNode(i);
-            if (oldNode.myItem.equals(item)) {
-                Node newNode = new Node(item, priority);
-                contents[i] = newNode;
-                if (oldNode.myPriority < newNode.myPriority) {
+            if (contents[i].myItem.equals(item)) {
+                if (contents[i].myPriority < priority) {
+                    contents[i].myPriority = priority;
                     sink(i);
-                } else swim(i);
+                } else {
+                    contents[i].myPriority = priority;
+                    swim(i);
+                }
             }
         }
         return;
